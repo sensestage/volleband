@@ -23,7 +23,7 @@ PORT = '/dev/ttyACM3'
 hostip = '127.0.0.1'
 hostport = 57120
 
-deltatime = 0.1
+deltatime = 0.05
 verbose = False
 
 BAUD_RATE = 57600

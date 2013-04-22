@@ -17,6 +17,9 @@ OSCdef( \rssiNdef, { |msg| Ndef(\noisysonify ).set( \midi, ~rssimid.sum/50 ) }, 
 ~plotterMID.start;
 
 
+mean = RunningSum.kr( input, length )/length;
+
+
 s.boot;
 
 Ndef( \noisysonify, { Resonz.ar( Saw.ar( \midi.kr(40).midicps.lag(0.1), 0.2 ), \midi.kr(40).midicps.lag(0.1) * [1,1.5,2,3,5,7,9,11], 0.2 ).sum } );

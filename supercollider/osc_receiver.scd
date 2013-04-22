@@ -3,8 +3,10 @@
 // varieer 50 voor het aantal samples om over te middelen:
 ~rssimid = List.fill( 50, {0} );
 
-OSCdef( \rssi, { |msg| ~rssi = msg[2].postln; ~rssimid = ~rssimid.put(0, msg[2] ).rotate(1); }, '/rx/rssi');
+OSCdef( \rssi, { |msg| ~rssi = msg[2] ~rssimid = ~rssimid.put(0, msg[2] ).rotate(1); }, '/rx/rssi');
 //OSCdef( \rssi, { |msg| ~rssi = msg[2].postln; }, '/rx/rssi');
+
+OSCdef( \rssifull, { |msg| msg.postln; }, '/rx/rssi');
 
 OSCdef( \rssiNdef, { |msg| Ndef(\noisysonify ).set( \midi, ~rssimid.sum/50 ) }, '/rx/rssi');
 

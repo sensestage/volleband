@@ -18,7 +18,8 @@ import struct
 
 import OSC
 
-destinations = [1,2,3,4,5]   # destination xbee
+#destinations = [1,2,3,4,5]   # destination xbees
+destinations = [1]   # destination xbees
 PORT = '/dev/ttyACM3'
 hostip = '127.0.0.1'
 hostport = 57120
@@ -71,8 +72,8 @@ def status_handler(name, packet):
 
 def rx_handler(name, packet):
     if verbose:
-      print "RX: ", int( ByteToHex( packet['source_addr'] ), 16 ), ord( packet['rssi'] )
-    sendMessage( "/rx/rssi", [ int( ByteToHex( packet['source_addr'] ), 16 ), ord( packet['rssi'] ) ] )
+      print "RX: ", int( ByteToHex( packet['source_addr'] ), 16 ), ord( packet['rssi'] ), packet
+    sendMessage( "/rx/rssi", [ int( ByteToHex( packet['source_addr'] ), 16 ), ord( packet['rssi'] ), ord( packet['rf_data'][0] ) ] )
 
 def txstatus_handler( name, packet ):
     if verbose:

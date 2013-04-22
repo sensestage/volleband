@@ -18,12 +18,12 @@ import struct
 
 import OSC
 
-destination = 1   # destination xbee
+destinations = [1,2,3,4,5]   # destination xbee
 PORT = '/dev/ttyACM3'
 hostip = '127.0.0.1'
 hostport = 57120
 
-deltatime = 0.05
+deltatime = 0.05 # should be more than 0.005 (since we send five messages at 0.001 interval
 verbose = False
 
 BAUD_RATE = 57600
@@ -143,19 +143,21 @@ while True:
 	datalist = [ msgid ]
 	#//datalist.extend( datalistin )
 	data = ''.join( datalist )
-	hrm = struct.pack('>H', destination )
-	xbee.send('tx',
-	  dest_addr=hrm,
-	  data=data,
-	  frame_id=msgid,
-	  options='\x02'
-	)
+	for dest in destinations:
+	  hrm = struct.pack('>H', dest )
+	  xbee.send('tx',
+	    dest_addr=hrm,
+	    data=data,
+	    frame_id=msgid,
+	    options='\x02'
+	  )
+	  time.sleep( 0.001 )
 
 	# Wait for response
 	#response = xbee.wait_read_frame()
 	#print response
 
-        time.sleep(deltatime)
+        time.sleep(deltatime - 0.005)
     except KeyboardInterrupt:
         break
 
